@@ -7,7 +7,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func authorize(c echo.Context) error {
