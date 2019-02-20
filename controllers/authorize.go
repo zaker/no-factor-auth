@@ -1,16 +1,18 @@
-package main
+package controllers
 
 import (
 	"net/http"
 	"net/url"
 	"time"
 
+	"github.com/equinor/no-factor-auth/config"
+
 	jwt "github.com/dgrijalva/jwt-go"
 
 	"github.com/labstack/echo/v4"
 )
 
-func authorize(c echo.Context) error {
+func Authorize(c echo.Context) error {
 	redirectURI := c.QueryParam("redirect_uri")
 	if redirectURI == "" {
 		redirectURI = "/"
@@ -31,7 +33,7 @@ func authorize(c echo.Context) error {
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
 		"sub":       sub,
 		"nbf":       time.Now().Unix(),
-		"iss":       authServer,
+		"iss":       c.Request().Host,
 		"aud":       clientID,
 		"nonce":     c.QueryParam("nonce"),
 		"auth_time": time.Now().Unix(),
@@ -48,12 +50,8 @@ func authorize(c echo.Context) error {
 	}
 
 	// Sign and get the complete encoded token as a string using the secret
-	p, err := jwt.ParseRSAPrivateKeyFromPEM([]byte(getCert("cert.pem")))
-	if err != nil {
-		return err
-	}
 
-	tokenString, err := token.SignedString(p)
+	tokenString, err := token.SignedString(config.PrivateKey())
 	if err != nil {
 		return err
 	}

@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/equinor/no-factor-auth/controllers"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -14,6 +16,14 @@ var (
 	tenantID   string
 	certPath   string
 )
+
+func setup(e *echo.Echo) {
+
+	com := e.Group("/common")
+	com.GET("/.well-known/openid-configuration", controllers.OidcConfig)
+	com.GET("/discovery/keys", controllers.Jwks)
+	com.GET("/oauth2/authorize", controllers.Authorize)
+}
 
 func main() {
 	err := godotenv.Load()

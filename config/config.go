@@ -1,3 +1,12 @@
+package config
+
+import (
+	"crypto/rsa"
+
+	jwt "github.com/dgrijalva/jwt-go"
+)
+
+const privKey = `
 -----BEGIN RSA PRIVATE KEY-----
 MIICXgIBAAKBgQDN+p9a9oMyqRzkae8yLdJcEK0O0WesH6JiMz+KDrpUwAoAM/KP
 DnxFnROJDSBHyHEmPVn5x8GqV5lQ9+6l97jdEEcPo6wkshycM82fgcxOmvtAy4Uo
@@ -13,3 +22,25 @@ mzTgeHd7wg3KdJRtQYTmyhXn2Y3VAJ5SG+3qbCW466NqoCQVCeFwEh75rmSr/Giv
 lcDhDZCzFuf3EWNAcmuMfQJARsWfM6q7v2p6vkYLLJ7+VvIwookkr6wymF5Zgb9d
 E6oTM2EeUPSyyrj5IdsU2JCNBH1m3JnUflz8p8/NYCoOZg==
 -----END RSA PRIVATE KEY-----
+`
+
+type Config struct {
+	HostAddr string
+	TenantID string
+	CertFile string
+}
+
+func Load() *Config {
+
+	return &Config{}
+}
+
+func PrivateKey() *rsa.PrivateKey {
+
+	p, _ := jwt.ParseRSAPrivateKeyFromPEM([]byte(privKey))
+	return p
+}
+
+func PublicKey() *rsa.PublicKey {
+	return &PrivateKey().PublicKey
+}

@@ -1,14 +1,16 @@
-package main
+package controllers
 
 import (
 	"encoding/base64"
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/equinor/no-factor-auth/oidc"
+
+	"github.com/equinor/no-factor-auth/config"
+
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )
@@ -19,16 +21,13 @@ func TestJwks(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := e.NewContext(req, rec)
-	if assert.NoError(t, jwksEndpoint(c)) {
+	if assert.NoError(t, Jwks(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		keys := jwks{}
+		keys := oidc.JWKS{}
 		json.Unmarshal(rec.Body.Bytes(), &keys)
 		assert.Equal(t, keys.Keys[0].Kid, "1")
-		p, err := jwt.ParseRSAPrivateKeyFromPEM([]byte(getCert("cert.pem")))
-		if err != nil {
-			log.Panic(err)
-		}
+
 		b64 := base64.StdEncoding.EncodeToString
-		assert.Equal(t, keys.Keys[0].N, b64(p.PublicKey.N.Bytes()))
+		assert.Equal(t, keys.Keys[0].N, b64(config.PublicKey().N.Bytes()))
 	}
 }

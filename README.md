@@ -4,7 +4,7 @@ It doesn't provide security, it provides a signed token to services that needs t
 
 ## Setup
 
-It needs a pem encode RSA certificate, for now called cert.pem.
+It contains a private key in config.go that signs the jwt tokens
 
 And since it's mostly zero config, it just starts on <http://0.0.0.0:8089>, all incomming on local server.
 

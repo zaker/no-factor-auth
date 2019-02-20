@@ -1,4 +1,4 @@
-package main
+package oidc
 
 import (
 	"crypto/rsa"
@@ -127,4 +127,15 @@ func GetKey(authserver string, kid string) (interface{}, error) {
 	// return ks.Keys, nil
 	log.Panic("foo")
 	return nil, nil
+}
+
+func Default() *OpenIDConfig {
+	oidc := &OpenIDConfig{
+		// JwksURI:               authServer + "/" + tenantID + "/discovery/keys",
+		SubjectTypesSupported:               []string{"pairwise"},
+		IDTokenEncryptionAlgValuesSupported: []string{"RS256"},
+		IDTokenSigningAlgValuesSupported:    []string{"RS256"},
+	}
+
+	return oidc
 }
