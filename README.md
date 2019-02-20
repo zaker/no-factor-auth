@@ -1,2 +1,3 @@
-# no-factor-auth
-A no factor auth server, to accomodate the need for testing jwt tokens in dev environments. 
+# This is a no factor "Authentication" service aka YOLO Auth
+
+It doesn't provide security, it provides a signed token to services that needs to perform e2e testing
