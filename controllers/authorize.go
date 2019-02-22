@@ -1,5 +1,4 @@
 package controllers
-
 import (
 	"net/http"
 	"net/url"
@@ -12,6 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Authorize provides id_token and access_token to anyone who asks
 func Authorize(c echo.Context) error {
 	redirectURI := c.QueryParam("redirect_uri")
 	if redirectURI == "" {
@@ -27,7 +27,7 @@ func Authorize(c echo.Context) error {
 
 	user := c.QueryParam("user")
 	if len(user) == 0 {
-		user = "Bodil Rotevatn"
+		user = "Jane Doe"
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
@@ -57,6 +57,7 @@ func Authorize(c echo.Context) error {
 	}
 	params := url.Values{}
 	params.Set("id_token", tokenString)
+	params.Set("access_token", tokenString)
 	params.Set("state", state)
 
 	return c.Redirect(http.StatusFound, redirectURI+"#"+params.Encode())
