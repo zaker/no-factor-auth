@@ -14,3 +14,9 @@ And since it's mostly zero config, it just starts on <http://0.0.0.0:8089>, all 
 go build
 ./no-factor-auth
 ```
+
+## Docker
+
+```bash
+docker run -p 8089:8089 heappurple/no-factor-auth 
+```
