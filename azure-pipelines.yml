@@ -10,8 +10,14 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'heappurple/no-factor-auth:$(build.buildId)'
+- group: buildsecrets
+- name: 'imageName'
+  value: 'heappurple/no-factor-auth:$(build.buildId)'
 
 steps:
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
+- script: docker login -u $(DOCKER_USER) -p $(DOCKER_PWD)
+  displayName: 'docker login'
+- script: docker push $(imageName) 
+  displayName: 'docker push'
