@@ -18,5 +18,5 @@ go build
 ## Docker
 
 ```bash
-docker run -p 8089:8089 heappurple/no-factor-auth 
+docker run -p 8089:8089 heappurple/no-factor-auth
 ```

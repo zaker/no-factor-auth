@@ -1,5 +1,4 @@
 package oidc
-
 import (
 	"crypto/rsa"
 	"encoding/base64"
@@ -90,7 +89,7 @@ func GetKey(authserver string, kid string) (interface{}, error) {
 	if len(jwks.Keys) == 0 {
 		return nil, fmt.Errorf("No keys in key set: %s", jwksURI)
 	}
-	fromB64 := base64.StdEncoding.DecodeString
+	fromB64 := base64.RawURLEncoding.DecodeString
 	jwk := jwks.Keys[0]
 	if jwk.Kty == "RSA" {
 
