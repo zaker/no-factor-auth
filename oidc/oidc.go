@@ -1,4 +1,5 @@
 package oidc
+
 import (
 	"crypto/rsa"
 	"encoding/base64"
