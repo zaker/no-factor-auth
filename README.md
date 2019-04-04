@@ -6,7 +6,7 @@ It doesn't provide security, it provides a signed token to services that needs t
 
 It contains a private key in config.go that signs the jwt tokens
 
-And since it's mostly zero config, it just starts on <http://0.0.0.0:8089>, all incomming on local server.
+And since it's mostly zero config, it starts on <http://0.0.0.0:8089>, all incomming on local server.
 
 ## Run
 
@@ -18,5 +18,5 @@ go build
 ## Docker
 
 ```bash
-docker run -p 8089:8089 heappurple/no-factor-auth
+docker run -p 8089:8089 lambdaville/no-factor-auth
 ```
