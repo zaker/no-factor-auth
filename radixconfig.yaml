@@ -17,7 +17,7 @@ spec:
       environmentConfig:
         - environment: production
           variables:
-            AUTH_SERVER: "https://prod-no-factor-auth.playground.equinor.com"
+            AUTH_SERVER: "https://no-factor-auth-no-factor-auth-production.playground-4.playground.radix.equinor.com"
             TENANT_ID: "common"
           monitoring: false
           resources:
