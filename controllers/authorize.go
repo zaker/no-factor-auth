@@ -1,4 +1,5 @@
 package controllers
+
 import (
 	"net/http"
 	"net/url"
@@ -10,6 +11,35 @@ import (
 
 	"github.com/labstack/echo/v4"
 )
+
+func newToken(sub, iss, aud, nonce, name string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
+		"sub":       sub,
+		"nbf":       time.Now().Unix(),
+		"iss":       iss,
+		"aud":       aud,
+		"nonce":     nonce,
+		"auth_time": time.Now().Unix(),
+		"acr":       "no-factor",
+		"iat":       time.Now().Unix(),
+		"exp":       time.Now().Add(1 * time.Hour).Unix(),
+		"name":      name,
+	})
+
+	token.Header = map[string]interface{}{
+		"typ": "JWT",
+		"alg": jwt.SigningMethodRS256.Name,
+		"kid": "1",
+	}
+
+	// Sign and get the complete encoded token as a string using the secret
+
+	tokenString, err := token.SignedString(config.PrivateKey())
+	if err != nil {
+		return "", err
+	}
+	return tokenString, nil
+}
 
 // Authorize provides id_token and access_token to anyone who asks
 func Authorize(c echo.Context) error {
@@ -30,28 +60,9 @@ func Authorize(c echo.Context) error {
 		user = "Jane Doe"
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
-		"sub":       sub,
-		"nbf":       time.Now().Unix(),
-		"iss":       c.Request().Host,
-		"aud":       clientID,
-		"nonce":     c.QueryParam("nonce"),
-		"auth_time": time.Now().Unix(),
-		"acr":       "no-factor",
-		"iat":       time.Now().Unix(),
-		"exp":       time.Now().Add(1 * time.Hour).Unix(),
-		"name":      user,
-	})
-
-	token.Header = map[string]interface{}{
-		"typ": "JWT",
-		"alg": jwt.SigningMethodRS256.Name,
-		"kid": "1",
-	}
-
 	// Sign and get the complete encoded token as a string using the secret
 
-	tokenString, err := token.SignedString(config.PrivateKey())
+	tokenString, err := newToken(sub, c.Request().Host, clientID, c.QueryParam("nonce"), user)
 	if err != nil {
 		return err
 	}

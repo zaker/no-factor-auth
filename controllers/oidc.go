@@ -1,4 +1,5 @@
 package controllers
+
 import (
 	"net/http"
 	"strings"
@@ -8,6 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// StdOiStdOidcConfigURI is the standard andpoint for oidc config
 const StdOidcConfigURI = "/.well-known/openid-configuration"
 
 // OidcConfig returns config for host
