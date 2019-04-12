@@ -12,7 +12,7 @@ pool:
 variables:
 - group: buildsecrets
 - name: 'imageName'
-  value: 'heappurple/no-factor-auth:$(build.buildId)'
+  value: 'lambdaville/no-factor-auth:$(build.buildId)'
 
 steps:
 - script: docker build -f Dockerfile -t $(imageName) .
