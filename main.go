@@ -31,7 +31,8 @@ func setup(e *echo.Echo) {
 	com.GET("/.well-known/openid-configuration", controllers.OidcConfig)
 	com.GET("/discovery/keys", controllers.Jwks)
 	com.GET("/oauth2/authorize", controllers.Authorize)
-	com.GET("/oauth2/token", controllers.Token)
+	com.GET("/oauth2/token", controllers.TokenGet)
+	com.POST("/oauth2/token", controllers.TokenPost)
 }
 
 func version() {

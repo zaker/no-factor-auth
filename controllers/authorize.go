@@ -70,6 +70,6 @@ func Authorize(c echo.Context) error {
 	params.Set("id_token", tokenString)
 	params.Set("access_token", tokenString)
 	params.Set("state", state)
-
-	return c.Redirect(http.StatusFound, redirectURI+"#"+params.Encode())
+	p := params.Encode()
+	return c.Redirect(http.StatusFound, redirectURI+"?"+p+"#"+p)
 }
