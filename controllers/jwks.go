@@ -30,6 +30,7 @@ func rsaKeyset() (*oidc.JWKS, error) {
 	return &keys, nil
 }
 
+// Jwks provides oidc keyset
 func Jwks(c echo.Context) error {
 
 	jwks, err := rsaKeyset()

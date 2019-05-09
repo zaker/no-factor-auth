@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// TokenOKResponse ok type
 type TokenOKResponse struct {
 	AccessToken  string `json:"access_token"`
 	TokenType    string `json:"token_type"`
@@ -17,6 +18,7 @@ type TokenOKResponse struct {
 	IDToken      string `json:"id_token"`
 }
 
+// TokenErrorResponse error type
 type TokenErrorResponse struct {
 	Error            string `json:"error"`
 	ErrorDescription string `json:"error_description"`
