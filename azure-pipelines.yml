@@ -16,9 +16,14 @@ variables:
   value: 'lambdaville/no-factor-auth:$(build.buildId)'
 
 steps:
-- script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
-- script: docker login -u $(DOCKER_USER) -p $(DOCKER_PWD)
-  displayName: 'docker login'
-- script: docker push $(imageName) 
-  displayName: 'docker push'
+- task: Docker@2
+  inputs:
+    repository: 'lambdaville/no-factor-auth'
+    command: 'buildAndPush'
+    Dockerfile: 'Dockerfile'
+# - script: docker build -f Dockerfile -t $(imageName) .
+#   displayName: 'docker build'
+# - script: docker login -u $(DOCKER_USER) -p $(DOCKER_PWD)
+#   displayName: 'docker login'
+# - script: docker push $(imageName) 
+#   displayName: 'docker push'
