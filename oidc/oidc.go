@@ -45,15 +45,15 @@ type OpenIDConfig struct {
 
 // JWK JSON Web Key
 type JWK struct {
-	Alg string   `json:"alg"`
-	Kty string   `json:"kty"`
-	Use string   `json:"use"`
-	Kid string   `json:"kid"`
-	X5T string   `json:"x5t"`
-	K   string   `json:"k"`
-	N   string   `json:"n"`
-	E   string   `json:"e"`
-	X5C []string `json:"x5c"`
+	Alg string   `json:"alg,omitempty"`
+	Kty string   `json:"kty,omitempty"`
+	Use string   `json:"use,omitempty"`
+	Kid string   `json:"kid,omitempty"`
+	X5T string   `json:"x5t,omitempty"`
+	K   string   `json:"k,omitempty"`
+	N   string   `json:"n,omitempty"`
+	E   string   `json:"e,omitempty"`
+	X5C []string `json:"x5c,omitempty"`
 }
 
 // JWKS keyset from openID
