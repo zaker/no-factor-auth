@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/equinor/no-factor-auth/oidc"
+	"github.com/equinor/no-factor-auth/services"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,7 +18,7 @@ func OidcConfig(c echo.Context) error {
 	// baseUrl := c
 
 	hostURL := "http://" + c.Request().Host + strings.TrimSuffix(c.Request().URL.String(), StdOidcConfigURI)
-	oidc := oidc.Default()
+	oidc := services.Default()
 	oidc.JwksURI = hostURL + "/discovery/keys"
 	oidc.Issuer = hostURL
 	oidc.AuthorizationEndpoint = hostURL + "/oauth2/authorize"

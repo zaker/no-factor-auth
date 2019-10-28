@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/equinor/no-factor-auth/oidc"
+	"github.com/equinor/no-factor-auth/services"
 
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
@@ -19,7 +19,7 @@ func TestOidc(t *testing.T) {
 	authServer := "http://example.com"
 	// tenantID := "common"
 	c := e.NewContext(req, rec)
-	var oidc oidc.OpenIDConfig
+	var oidc services.OpenIDConfig
 	if assert.NoError(t, OidcConfig(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		json.Unmarshal(rec.Body.Bytes(), &oidc)
@@ -34,7 +34,7 @@ func TestOidcTenant(t *testing.T) {
 	authServer := "http://example.com" + tenant
 	// tenantID := "common"
 	c := e.NewContext(req, rec)
-	var oidc oidc.OpenIDConfig
+	var oidc services.OpenIDConfig
 	if assert.NoError(t, OidcConfig(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		json.Unmarshal(rec.Body.Bytes(), &oidc)

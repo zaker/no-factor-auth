@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/equinor/no-factor-auth/oidc"
+	"github.com/equinor/no-factor-auth/services"
 
 	"github.com/equinor/no-factor-auth/config"
 
@@ -23,7 +23,7 @@ func TestJwks(t *testing.T) {
 	c := e.NewContext(req, rec)
 	if assert.NoError(t, Jwks(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		keys := oidc.JWKS{}
+		keys := services.JWKS{}
 		json.Unmarshal(rec.Body.Bytes(), &keys)
 		assert.Equal(t, keys.Keys[0].Kid, "1")
 

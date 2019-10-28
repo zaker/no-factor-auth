@@ -1,4 +1,4 @@
-package oidc
+package services
 
 import (
 	"crypto/rsa"

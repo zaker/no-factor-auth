@@ -6,11 +6,11 @@ import (
 	"net/http"
 
 	"github.com/equinor/no-factor-auth/config"
-	"github.com/equinor/no-factor-auth/oidc"
+	"github.com/equinor/no-factor-auth/services"
 	"github.com/labstack/echo/v4"
 )
 
-func rsaKeyset() (*oidc.JWKS, error) {
+func rsaKeyset() (*services.JWKS, error) {
 
 	pub := config.PublicKey()
 	b64 := base64.StdEncoding.EncodeToString
@@ -18,8 +18,8 @@ func rsaKeyset() (*oidc.JWKS, error) {
 	e := big.Int{}
 	e.SetUint64(uint64(pub.E))
 
-	keys := oidc.JWKS{
-		Keys: []oidc.JWK{
+	keys := services.JWKS{
+		Keys: []services.JWK{
 			{
 				Alg: "RS256",
 				Kty: "RSA",
@@ -32,10 +32,10 @@ func rsaKeyset() (*oidc.JWKS, error) {
 	return &keys, nil
 }
 
-func hmacKeyset() (*oidc.JWKS, error) {
+func hmacKeyset() (*services.JWKS, error) {
 
-	keys := oidc.JWKS{
-		Keys: []oidc.JWK{
+	keys := services.JWKS{
+		Keys: []services.JWK{
 			{
 				Alg: "HS256",
 				Kty: "oct",
