@@ -24,6 +24,8 @@ E6oTM2EeUPSyyrj5IdsU2JCNBH1m3JnUflz8p8/NYCoOZg==
 -----END RSA PRIVATE KEY-----
 `
 
+const hmacSecret = `SECRET_2gtzk`
+
 type Config struct {
 	HostAddr string
 	TenantID string
@@ -43,4 +45,8 @@ func PrivateKey() *rsa.PrivateKey {
 
 func PublicKey() *rsa.PublicKey {
 	return &PrivateKey().PublicKey
+}
+
+func HMACKey() []byte {
+	return []byte(hmacSecret)
 }

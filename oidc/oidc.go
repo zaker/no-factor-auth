@@ -45,10 +45,12 @@ type OpenIDConfig struct {
 
 // JWK JSON Web Key
 type JWK struct {
+	Alg string   `json:"alg"`
 	Kty string   `json:"kty"`
 	Use string   `json:"use"`
 	Kid string   `json:"kid"`
 	X5T string   `json:"x5t"`
+	K   string   `json:"k"`
 	N   string   `json:"n"`
 	E   string   `json:"e"`
 	X5C []string `json:"x5c"`
@@ -134,7 +136,7 @@ func Default() *OpenIDConfig {
 		// JwksURI:               authServer + "/" + tenantID + "/discovery/keys",
 		SubjectTypesSupported:               []string{"pairwise"},
 		IDTokenEncryptionAlgValuesSupported: []string{"RS256"},
-		IDTokenSigningAlgValuesSupported:    []string{"RS256"},
+		IDTokenSigningAlgValuesSupported:    []string{"RS256", "HS256"},
 	}
 
 	return oidc
