@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -11,6 +12,11 @@ import (
 
 	"github.com/labstack/echo/v4"
 )
+
+func issuer(req *http.Request) string {
+
+	return fmt.Sprintf("%s://%s/common", req.Proto, req.Host)
+}
 
 func newToken(sub, iss, aud, nonce, name string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
@@ -62,7 +68,7 @@ func Authorize(c echo.Context) error {
 
 	// Sign and get the complete encoded token as a string using the secret
 
-	tokenString, err := newToken(sub, c.Request().Host, clientID, c.QueryParam("nonce"), user)
+	tokenString, err := newToken(sub, issuer(c.Request()), clientID, c.QueryParam("nonce"), user)
 	if err != nil {
 		return err
 	}
