@@ -96,8 +96,5 @@ func checktoken(tokenString string, pubKey interface{}) func(t *testing.T) {
 			t.Errorf("Subject can't be parsed")
 		}
 		fmt.Println(sub)
-		return
-
 	}
-
 }

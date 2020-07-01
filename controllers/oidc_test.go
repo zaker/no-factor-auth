@@ -22,7 +22,10 @@ func TestOidc(t *testing.T) {
 	var oidc oidc.OpenIDConfig
 	if assert.NoError(t, OidcConfig(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		json.Unmarshal(rec.Body.Bytes(), &oidc)
+		err := json.Unmarshal(rec.Body.Bytes(), &oidc)
+		if err != nil {
+			assert.NoError(t, err)
+		}
 		assert.Equal(t, authServer+"/discovery/keys", oidc.JwksURI)
 	}
 }
@@ -37,29 +40,10 @@ func TestOidcTenant(t *testing.T) {
 	var oidc oidc.OpenIDConfig
 	if assert.NoError(t, OidcConfig(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		json.Unmarshal(rec.Body.Bytes(), &oidc)
+		err := json.Unmarshal(rec.Body.Bytes(), &oidc)
+		if err != nil {
+			assert.NoError(t, err)
+		}
 		assert.Equal(t, authServer+"/discovery/keys", oidc.JwksURI)
 	}
 }
-
-// func TestOidcConfig(t *testing.T) {
-// 	type args struct {
-// 		c echo.Context
-// 	}
-// 	args.c = e.NewContext(req, rec)
-// 	tests := []struct {
-// 		name    string
-// 		args    args
-// 		wantErr bool
-// 	}{
-// 		// TODO: Add test cases.
-// 		{"Returns oidc-configuration",}
-// 	}
-// 	for _, tt := range tests {
-// 		t.Run(tt.name, func(t *testing.T) {
-// 			if err := OidcConfig(tt.args.c); (err != nil) != tt.wantErr {
-// 				t.Errorf("OidcConfig() error = %v, wantErr %v", err, tt.wantErr)
-// 			}
-// 		})
-// 	}
-// }

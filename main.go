@@ -15,12 +15,6 @@ import (
 )
 
 var (
-	authServer string
-	tenantID   string
-	certPath   string
-)
-
-var (
 	Version = ""
 	v       = flag.Bool("version", false, "Display version")
 )
@@ -53,8 +47,6 @@ func main() {
 		log.Fatal("Error loading .env file", err)
 	}
 
-	authServer = os.Getenv("AUTHSERVER")
-	tenantID = os.Getenv("TENANT_ID")
 	e := echo.New()
 
 	e.Use(middleware.Logger())
