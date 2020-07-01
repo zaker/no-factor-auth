@@ -12,11 +12,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type pair struct{
-	key string
-	values []string
-}
-
 func newTokenWithClaims(sub, iss, aud, nonce, name string, claims map[string]interface{}) (string, error) {
 	defaultClaims := jwt.MapClaims{
 		"sub":       sub,
@@ -52,7 +47,7 @@ func newTokenWithClaims(sub, iss, aud, nonce, name string, claims map[string]int
 	return tokenString, nil
 }
 
-func newToken(sub, iss, aud, nonce, name string) (string, error){
+func newToken(sub, iss, aud, nonce, name string) (string, error) {
 	var extraClaims map[string]interface{}
 	return newTokenWithClaims(sub, iss, aud, nonce, name, extraClaims)
 }
