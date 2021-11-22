@@ -7,7 +7,7 @@ import (
 
 	"github.com/equinor/no-factor-auth/config"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 
 	"github.com/labstack/echo/v4"
 )
