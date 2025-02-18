@@ -9,7 +9,7 @@ RUN go mod download
 COPY . .
 
 ENV CGO_ENABLED=0
-ENV GOARCH=amd64
+
 RUN go test ./...
 
 RUN GOOS=linux go build -ldflags "-X main.Version=$TAG" -o no-factor-auth.linux
