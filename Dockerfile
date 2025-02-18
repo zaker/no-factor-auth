@@ -12,7 +12,7 @@ ENV CGO_ENABLED=0
 
 RUN go test ./...
 
-RUN GOOS=linux go build -ldflags "-X main.Version=$TAG" -o no-factor-auth.linux
+RUN go build -ldflags "-X main.Version=$TAG" -o no-factor-auth.linux
 
 FROM scratch
 
