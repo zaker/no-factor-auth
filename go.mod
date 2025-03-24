@@ -1,7 +1,7 @@
 module github.com/equinor/no-factor-auth
 
 require (
-	github.com/golang-jwt/jwt/v4 v4.5.1
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/golang/mock v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.13.3
@@ -25,4 +25,4 @@ require (
 )
 
 go 1.21
-toolchain go1.23.7
+toolchain go1.24.1
