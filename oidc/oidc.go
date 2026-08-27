@@ -3,7 +3,8 @@ package oidc
 import (
 	"crypto/rsa"
 	"encoding/base64"
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
 	"math/big"
 	"net/http"
@@ -63,28 +64,38 @@ type JWKS struct {
 
 var configClient = &http.Client{Timeout: 10 * time.Second}
 
-func getJSON(url string, target interface{}) error {
+func getJSON[T any](url string) (T, error) {
+	var target T
+
 	r, err := configClient.Get(url)
 	if err != nil {
-		return err
+		return target, fmt.Errorf("failed to get %s: %w", url, err)
 	}
 	defer r.Body.Close()
 
-	return json.NewDecoder(r.Body).Decode(target)
+	if r.StatusCode != http.StatusOK {
+		return target, fmt.Errorf("unexpected status code %d from %s", r.StatusCode, url)
+	}
+
+	decoder := jsontext.NewDecoder(r.Body)
+	if err := json.UnmarshalDecode(decoder, &target); err != nil {
+		return target, fmt.Errorf("failed to decode response from %s: %w", url, err)
+	}
+
+	return target, nil
 }
 
 // GetKey gets the authservers signing key
 func GetKey(authserver string, kid string) (interface{}, error) {
-	oidcConf := OpenIDConfig{}
-	err := getJSON(authserver+"/.well-known/openid-configuration", &oidcConf)
+
+	oidcConf, err := getJSON[OpenIDConfig](authserver + "/.well-known/openid-configuration")
 	if err != nil {
 		return nil, err
 	}
 
 	jwksURI := oidcConf.JwksURI
 
-	jwks := JWKS{}
-	err = getJSON(jwksURI, &jwks)
+	jwks, err := getJSON[JWKS](jwksURI)
 	if err != nil {
 		return nil, err
 	}

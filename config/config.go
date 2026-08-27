@@ -32,11 +32,6 @@ type Config struct {
 	CertFile string
 }
 
-func Load() *Config {
-
-	return &Config{}
-}
-
 func PrivateKey() *rsa.PrivateKey {
 
 	p, _ := jwt.ParseRSAPrivateKeyFromPEM([]byte(privKey))
